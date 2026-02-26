@@ -1,50 +1,144 @@
 pipeline {
- agent any
- environment {
- SERVER_IP = '3.109.4.150'
- SSH_CREDENTIAL = 'node-app-key'
- REPO_URL = 'https://github.com/pranav-khade-tech/gym-static-website.git'
- BRANCH = 'main'
- REMOTE_USER = 'ubuntu'
- REMOTE_PATH = '/var/www/html'
- }
- stages {
- stage('Clone Repository') {
- steps {
- git branch: "${BRANCH}", url: "${REPO_URL}"
- }
- }
- stage('Deploy to Target Server') {
- steps {
- sshagent([SSH_CREDENTIAL]) {
-    sh """
-    ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} 'mkdir -p ${REMOTE_PATH}'
- scp -o StrictHostKeyChecking=no -r * ${REMOTE_USER}@${SERVER_IP}:${REMOTE_PATH}
- """
- }
- }
- }
- stage('Restart Nginx') {
- steps {
- sshagent([SSH_CREDENTIAL]) {
- sh """
- ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} '
- sudo systemctl restart nginx
- '
- """
- }
- }
- }
- }
+    agent any
 
-post {
- success {
- echo 'Deployment Successful'
- }
- failure {
- echo 'Deployment Failed'
- }
+    environment {
+        SERVER_IP      = '13.201.65.123'
+        SSH_CREDENTIAL = 'node-app-key'
+        REPO_URL       = 'https://github.com/pranav-khade-tech/gym-static-website.git'
+        BRANCH         = 'main'
+        REMOTE_USER    = 'ubuntu'
+        REMOTE_PATH    = '/var/www/html'
+    }
 
- 
- }
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                git branch: "${BRANCH}",
+                    url: "${REPO_URL}"
+            }
+        }
+
+        stage('Deploy to Target Server') {
+            steps {
+                sshagent([SSH_CREDENTIAL]) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} 'mkdir -p ${REMOTE_PATH}'
+                        scp -o StrictHostKeyChecking=no -r * ${REMOTE_USER}@${SERVER_IP}:${REMOTE_PATH}
+                    """
+                }
+            }
+        }
+
+        stage('Restart Nginx') {
+            steps {
+                sshagent([SSH_CREDENTIAL]) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} 
+                        'sudo systemctl restart nginx'
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment Successful'
+        }
+        failure {
+            echo 'Deployment Failed'
+        }
+    }
 }
+
+
+
+/*Explination Of Jenkins File How Work:*/
+
+/*🔸 Command 1:
+ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} 'mkdir -p ${REMOTE_PATH}'
+
+Meaning:
+
+Connect to remote server
+
+Create directory /var/www/html
+
+-p means: create if not exists
+
+Why StrictHostKeyChecking=no?
+
+Because:
+First-time SSH asks:
+“Are you sure you want to continue connecting?”
+
+Jenkins cannot press "yes".
+So we disable that prompt. */
+
+
+
+
+/*🔸 Command 2:
+scp -o StrictHostKeyChecking=no -r * ${REMOTE_USER}@${SERVER_IP}:${REMOTE_PATH}
+
+Meaning:
+
+scp = secure copy
+
+-r = recursive
+
+* = copy all files
+
+Copy from Jenkins workspace → remote server path
+
+So now your HTML, CSS, IMG all go to /var/www/html.*/
+
+
+
+
+/*🔹 Stage: Restart Nginx
+sudo systemctl restart nginx
+
+Why?
+
+Because:
+
+Nginx serves files from /var/www/html
+
+After new files copied → restart ensures fresh load
+
+Sometimes restart is not required for static files.
+But it's safe to do.*/
+
+
+
+/*🔹 Important Technical Concept
+
+SSH authentication works using:
+
+Public Key → stored on target server (~/.ssh/authorized_keys)
+Private Key → stored inside Jenkins credentials
+
+When Jenkins connects:
+
+Server checks if public key matches private key
+
+If match → login allowed
+
+No password needed.  
+*/
+
+
+
+
+/*
+=Full Flow Summary (Simple Words)
+-Jenkins agent starts
+-Download code from GitHub
+-Use SSH key to login EC2
+-Create directory
+-Copy website files
+-Restart Nginx
+-Show result
+That’s your complete CI/CD flow. */
