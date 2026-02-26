@@ -1,96 +1,86 @@
 # Jenkin Test Task 
 ## MCQs Questions 
-1️⃣ What is Jenkins mainly used for?
-A) Server Monitoring
-B) Continuous Integration and Continuous Delivery
-C) Database Management
-D) Container Orchestration
 
-Ans: Continuous Integration and Continuous Delivery
+### 1) What is Jenkins mainly used for?
+- A) Server Monitoring
+- B) Continuous Integration and Continuous Delivery
+- C) Database Management
+- D) Container Orchestration
 
----
-2️⃣ Which type of job allows you to define build steps using code
-in Jenkins?
-A) Freestyle Project
-B) Pipeline Project
-C) Multi-Configuration Project
-D) External Job
+ Ans: B
 
-Ans: Pipeline Project
+### 2) Which type of job allows you to define build steps using code in Jenkins?
+- A) Freestyle Project
+- B) Pipeline Project
+- C) Multi-Configuration Project
+- D) External Job
 
----
-3️⃣ Which file is used to define a pipeline in Jenkins?
-A) pipeline.yaml
-B) dockerfile
-C) Jenkinsfile
-D) build.gradle
+Ans: B
 
-Ans: Jenkinsfile
+### 3) Which file is used to define a pipeline in Jenkins?
+- A) pipeline.yaml
+- B) dockerfile
+- C) Jenkinsfile
+- D) build.gradle
 
----
-4️⃣ What is the purpose of a Jenkins Agent (Node)?
-A) To store source code
-B) To execute jobs assigned by the Jenkins controller
-C) To manage plugins
-D) To configure webhooks
+Ans: C
 
-Ans: To execute jobs assigned by the Jenkins controller
+### 4)What is the purpose of a Jenkins Agent (Node)?
+- A To store source code
+- B To execute jobs assigned by the Jenkins controller
+- C To manage plugins
+- D To configure webhooks
 
----
-5️⃣ Which plugin is required to connect Jenkins with GitHub?
-A) Docker Plugin
-B) Git Plugin
-C) Kubernetes Plugin
-D) Maven Plugin
+Ans: B
 
-Ans: Git Plugin
+### 5) Which plugin is required to connect Jenkins with GitHub?
+- A) Docker Plugin
+- B) Git Plugin
+- C) Kubernetes Plugin
+- D) Maven Plugin
 
----
-6️⃣ What is the purpose of a Webhook in Jenkins CI/CD?
-A) To install plugins
-B) To trigger build automatically on code push
-C) To secure Jenkins server
-D) To restart Jenkins
+Ans: B
 
-Ans: To trigger build automatically on code push
+### 6) What is the purpose of a Webhook in Jenkins CI/CD?
+- A) To install plugins
+- B) To trigger build automatically on code push
+- C) To secure Jenkins server
+- D) To restart Jenkins
 
----
-7️⃣ Which command is used inside Jenkins Pipeline to execute
-shell commands?
-A) bash
-B) cmd
-C) sh
-D) run
+Ans: B
 
-Ans: sh
+### 7) Which command is used inside Jenkins Pipeline to execute shell commands?
+- A) bash
+- B) cmd
+- C) sh
+- D) run
 
----
-8️⃣ What is the purpose of post block in Jenkins Pipeline?
-A) Define environment variables
-B) Execute steps after pipeline stages
-C) Define agents
-D) Install plugins
+Ans: C
 
-Ans: Execute steps after pipeline stages
----
-9️⃣ What is the use of sshagent in Jenkins Pipeline?
-A) Install SSH on server
-B) Store SSH keys
-C) Use stored SSH credentials during execution
-D) Restart SSH service
+### 8) What is the purpose of post block in Jenkins Pipeline?
+- A) Define environment variables
+- B) Execute steps after pipeline stages
+- C) Define agents
+- D) Install plugins
 
-Ans: Use stored SSH credentials during execution
+Ans: B
 
----
-🔟 What happens if a stage fails in Jenkins Pipeline (by default)?
-A) The pipeline continues to next stage
-B) The pipeline stops execution
-C) Jenkins restarts automatically
-D) All stages are skipped but marked successful
+### 9) What is the use of sshagent in Jenkins Pipeline?
+- A) Install SSH on server
+- B) Store SSH keys
+- C) Use stored SSH credentials during execution
+- D) Restart SSH service
 
-Ans: The pipeline stops execution
+Ans: C
 
----
+### 10) What happens if a stage fails in Jenkins Pipeline (by default)?
+- A) The pipeline continues to next stage
+- B) The pipeline stops execution
+- C) Jenkins restarts automatically
+- D) All stages are skipped but marked successful
+
+Ans: B
+
 ## Scenario Based questions
 
 You are hired as a Junior DevOps Engineer in a startup fitness company called
@@ -112,13 +102,52 @@ You are responsible for complete automation.
  - Install Jenkins
  - Configure required plugins
  - Configure SSH credentials
+ ![](./IMG/9%20Installation%20Of%20Java%20and%20jenkin.png)
 
 
 **2. Target Server**
 - Install nginx
 - Ensure port 80 is open
 - Website should be accessible via browser
+![](./IMG/2.png)
+---
+### Task 2: Create GitHub Repository
+1. Create a new public GitHub repository:
+gym-static-website
+2. Add the following HTML code:
+![](./IMG/5.png)
+---
+### Task 3: Make Required Change
+-Modify the website:
+Change:
+```bash
+Hello from FitLife Gym
+```
+To:
+```bash
+Hi from FitLife Gym
+```
+- Push the changes to GitHub.
+![](./IMG/4.png)
+---
 
+### Task 4: Configure Webhook
+- Configure GitHub webhook
+![](./IMG/11%20webhook.png)
+
+- Trigger Jenkins job automatically on push
+![](./IMG/12%20jenkins.png)
+---
+### Task 5: Jenkins Pipeline
+
+- Create a Pipeline Job and add the following Jenkinsfile:
+![](./IMG/13.png)
+
+- Succefully Run the job
+![](./IMG/8%20.png)
+
+- End Result
+![](./IMG/14.png)
 
 
 
